@@ -30,6 +30,7 @@ final class FormControlOptions implements \IteratorAggregate, \Countable
     private array $groups = [];
 
     private bool $hasGroups = false;
+    private bool $acceptUnknownValues = false;
 
     public function __construct()
     {
@@ -52,9 +53,14 @@ final class FormControlOptions implements \IteratorAggregate, \Countable
         }
     }
 
-    public function has(string $value): bool
+    public function acceptUnknownValues(bool $acceptUnknownValues = true): void
     {
-        return isset($this->knownValues[$value]);
+        $this->acceptUnknownValues = $acceptUnknownValues;
+    }
+
+    public function acceptValue(string $value): bool
+    {
+        return $this->acceptUnknownValues || isset($this->knownValues[$value]);
     }
 
     /**

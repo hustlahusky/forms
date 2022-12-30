@@ -16,4 +16,13 @@ trait OptionTrait
 
         return $this;
     }
+
+    public function acceptUnknownValues(bool $acceptUnknownValues = true): self
+    {
+        \assert(isset($this->control) && $this->control instanceof FormControl);
+
+        $this->control->acceptUnknownValues($acceptUnknownValues);
+
+        return $this;
+    }
 }

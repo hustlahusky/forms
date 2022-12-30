@@ -64,7 +64,7 @@ final class FormHandler
                     foreach ($control->multiple && \is_array($value) ? $value : [$value] as $v) {
                         $v = (string)$v;
 
-                        if (!$control->options->has($v)) {
+                        if (!$control->options->acceptValue($v)) {
                             continue;
                         }
 
@@ -76,7 +76,7 @@ final class FormHandler
 
                 case FormControlType::RADIO:
                     $value = (string)$value;
-                    $control->value = $control->options->has($value) ? $value : null;
+                    $control->value = $control->options->acceptValue($value) ? $value : null;
                     break;
 
                 case FormControlType::CHECKBOX:

@@ -38,4 +38,9 @@ final class FormControl
     {
         $this->options->addOption($value, $label, $group);
     }
+
+    public function acceptUnknownValues(bool $acceptUnknownValues = true): void
+    {
+        $this->options->acceptUnknownValues($acceptUnknownValues);
+    }
 }
