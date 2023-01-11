@@ -93,4 +93,15 @@ final class FormHandler
 
         return $output;
     }
+
+    public function clear(): void
+    {
+        $this->visitor->visit(function (FormControl $control) {
+            if (FormControlType::HIDDEN === $control->type) {
+                return;
+            }
+
+            $control->value = null;
+        });
+    }
 }
