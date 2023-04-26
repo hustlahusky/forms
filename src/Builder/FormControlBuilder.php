@@ -106,8 +106,8 @@ abstract class FormControlBuilder
         return SelectFormControlBuilder::make($name, $label);
     }
 
-    public static function hidden(string $name, ?string $value = null): HiddenFormControlBuilder
+    public static function hidden(string $name, ?string $value = null, bool $mutable = false): HiddenFormControlBuilder
     {
-        return HiddenFormControlBuilder::make($name, $value);
+        return HiddenFormControlBuilder::make($name, $value, $mutable);
     }
 }
