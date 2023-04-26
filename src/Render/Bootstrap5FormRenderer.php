@@ -16,7 +16,7 @@ use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select;
 use Yiisoft\Html\Tag\Textarea;
 
-final class BootstrapFormRenderer extends AbstractFormRenderer
+final class Bootstrap5FormRenderer extends AbstractFormRenderer
 {
     /**
      * @param string|array<string,mixed> $classOrAttributes
@@ -89,7 +89,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
 
         foreach ($row->controls as $control) {
             yield Html::openTag('div', [
-                'class' => \sprintf('form-group col-xs-12 col-md-%d', $control->size->size),
+                'class' => \sprintf('col-xs-12 col-md-%d', $control->size->size),
             ]);
 
             yield from $this->renderControl($control);
@@ -139,6 +139,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
 
         yield Label::tag()
             ->forId($id)
+            ->addClass('form-label')
             ->content(...$this->getControlLabel($control));
 
         yield Input::tag()
@@ -162,6 +163,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
 
         yield Label::tag()
             ->forId($id)
+            ->addClass('form-label')
             ->content(...$this->getControlLabel($control));
 
         yield Textarea::tag()
@@ -188,6 +190,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
 
         yield Label::tag()
             ->forId($id)
+            ->addClass('form-label')
             ->content(...$this->getControlLabel($control));
 
         yield Select::tag()
@@ -204,7 +207,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
                     ->disabled($control->required)
             )
             ->optionsData($control->options->toSelectArray())
-            ->addClass('custom-select form-control', $this->getControlExtraClass($control))
+            ->addClass('form-select', $this->getControlExtraClass($control))
             ->unionAttributes($control->extraAttributes);
 
         if ($control->readonly) {
@@ -219,7 +222,9 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
      */
     private function renderControlRadio(FormControl $control): \Generator
     {
-        yield Label::tag()->content(...$this->getControlLabel($control));
+        yield Label::tag()
+            ->addClass('form-label')
+            ->content(...$this->getControlLabel($control));
 
         $controlValue = (string)$control->value;
 
@@ -227,7 +232,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
             $value = (string)$value;
 
             yield Html::openTag('div', [
-                'class' => 'custom-control custom-radio',
+                'class' => 'form-check',
             ]);
 
             yield Input\Radio::tag()
@@ -237,9 +242,9 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
                 ->required($control->readonly ? false : $control->required)
                 ->value($value)
                 ->checked($value === $controlValue)
-                ->addClass('custom-control-input', $this->getControlExtraClass($control))
+                ->addClass('form-check-input', $this->getControlExtraClass($control))
                 ->sideLabel($label, [
-                    'class' => 'custom-control-label font-weight-normal',
+                    'class' => 'form-check-label',
                 ])
                 ->unionAttributes($control->extraAttributes);
 
@@ -257,7 +262,7 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
     private function renderControlCheckbox(FormControl $control): \Generator
     {
         yield Html::openTag('div', [
-            'class' => 'custom-control custom-checkbox',
+            'class' => 'form-check',
         ]);
 
         $checked = \filter_var($control->value, \FILTER_VALIDATE_BOOLEAN);
@@ -265,11 +270,11 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
         yield Input\Checkbox::tag()
             ->id($this->getNextControlId())
             ->name($control->readonly ? null : $this->getControlName($control))
-            ->addClass('custom-control-input', $this->getControlExtraClass($control))
+            ->addClass('form-check-input', $this->getControlExtraClass($control))
             ->disabled($control->readonly)
             ->required($control->readonly ? false : $control->required)
             ->sideLabel(\implode(\iterator_to_array($this->getControlLabel($control), false)), [
-                'class' => 'custom-control-label',
+                'class' => 'form-check-label',
             ])
             ->checked($checked)
             ->unionAttributes($control->extraAttributes);
@@ -288,7 +293,9 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
     {
         $checked = \array_flip($control->value);
 
-        yield Label::tag()->content(...$this->getControlLabel($control));
+        yield Label::tag()
+            ->addClass('form-label')
+            ->content(...$this->getControlLabel($control));
 
         $count = \count($control->options);
         $splitColumns = 11 < $count && $control->size->isFull();
@@ -316,18 +323,18 @@ final class BootstrapFormRenderer extends AbstractFormRenderer
             }
 
             yield Html::openTag('div', [
-                'class' => 'custom-control custom-checkbox',
+                'class' => 'form-check',
             ]);
 
             yield Input\Checkbox::tag()
                 ->id($this->getNextControlId())
                 ->name($control->readonly ? null : $this->getControlName($control))
                 ->value($value)
-                ->addClass('custom-control-input', $this->getControlExtraClass($control))
+                ->addClass('form-check-input', $this->getControlExtraClass($control))
                 ->disabled($control->readonly)
                 ->required($control->readonly ? false : $control->required)
                 ->sideLabel($label, [
-                    'class' => 'custom-control-label font-weight-normal',
+                    'class' => 'form-check-label',
                 ])
                 ->checked(isset($checked[$value]))
                 ->unionAttributes($control->extraAttributes);
