@@ -45,7 +45,7 @@ final class FormHandler
         $this->visitor->visit(function (FormControl $control) use (&$output, $formData) {
             $output[$control->name] = $control->value;
 
-            if (FormControlType::HIDDEN === $control->type) {
+            if (!$control->mutable) {
                 return;
             }
 
@@ -97,7 +97,7 @@ final class FormHandler
     public function clear(): void
     {
         $this->visitor->visit(function (FormControl $control) {
-            if (FormControlType::HIDDEN === $control->type) {
+            if (!$control->mutable) {
                 return;
             }
 
