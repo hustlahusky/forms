@@ -171,8 +171,9 @@ final class Bootstrap5FormRenderer extends AbstractFormRenderer
             ->name($this->getControlName($control))
             ->value($control->value)
             ->addClass('form-control', $this->getControlExtraClass($control))
-            ->attribute('placeholder', $control->placeholder)
+            ->attribute('readonly', $control->readonly)
             ->attribute('required', $control->required)
+            ->attribute('placeholder', $control->placeholder)
             ->unionAttributes($control->extraAttributes);
     }
 
