@@ -15,7 +15,7 @@ final class HiddenFormControlBuilder extends FormControlBuilder
 
         $builder->control->type = FormControlType::HIDDEN;
         $builder->control->size = FormControlSize::empty();
-        $builder->control->mutable = $mutable;
+        $builder->control->readonly = !$mutable;
         $builder->setName($name);
         $builder->setValue($value);
 

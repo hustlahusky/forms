@@ -45,7 +45,7 @@ final class FormHandler
         $this->visitor->visit(function (FormControl $control) use (&$output, $formData) {
             $output[$control->name] = $control->value;
 
-            if (!$control->mutable) {
+            if ($control->readonly) {
                 return;
             }
 
@@ -97,7 +97,7 @@ final class FormHandler
     public function clear(): void
     {
         $this->visitor->visit(function (FormControl $control) {
-            if (!$control->mutable) {
+            if ($control->readonly) {
                 return;
             }
 

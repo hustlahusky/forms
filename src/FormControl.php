@@ -22,7 +22,6 @@ final class FormControl
     public bool $required = false;
     public FormControlOptions $options;
     public bool $multiple = false;
-    public bool $mutable = true;
 
     /**
      * @var array<string,string>
